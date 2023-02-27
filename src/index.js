@@ -1,17 +1,25 @@
 module.exports = function check(str, bracketsConfig) {
-    let openbracket = []
-        closebracket = []
-        brackets = []
+    let countOpen = 0
+        countClose = 0
+
     for (let i of bracketsConfig) {
-        openbracket.push(i[0])
-        closebracket.push(i[1])
-    }
-    for (let i of str) {
-        if (openbracket.includes(i)) {
-            brackets.push(i)
-        } else if (closebracket.indexOf(i) === openbracket.indexOf(brackets.length - 1)) {
-            brackets.pop(brackets.length - 1)
+        if (str.includes(i[0])){
+            countOpen += 1
+        }else if (str.includes(i[1])) {
+            countClose += 1
         }
     }
-    return true ? brackets.length === 0:false
+
+    if(countOpen !== countClose){
+        while (str.length > 0) {
+            for (let i of bracketsConfig) {
+                if (str.includes(i.join(''))) {
+                    str = str.replace(i.join(''), '')
+                }
+            }
+        }
+        return str.length === 0 ? true : false
+    }else{
+        return false
+    }
 }
