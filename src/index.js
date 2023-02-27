@@ -11,12 +11,14 @@ module.exports = function check(str, bracketsConfig) {
     }
 
     if(countOpen !== countClose){
-        while (str.length > 0) {
+        let len = str.length / 2
+        while (len > 0) {
             for (let i of bracketsConfig) {
                 if (str.includes(i.join(''))) {
                     str = str.replace(i.join(''), '')
                 }
             }
+            len -= 1
         }
         return str.length === 0 ? true : false
     }else{
